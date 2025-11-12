@@ -181,7 +181,8 @@ export const monthlyBudgetOperations = {
       year,
       month,
       category_id: category.id,
-      planned_amount: 0,
+      // Set default salary to 150000, others to 0
+      planned_amount: category.name === 'Salary Received' ? 150000 : 0,
       actual_amount: 0,
     }));
 

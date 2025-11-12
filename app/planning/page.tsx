@@ -108,6 +108,22 @@ export default function BudgetPlanningPage() {
     }
   };
 
+  const handleBulkUpdate = async (updates: Array<{ id: string; planned_amount: number; actual_amount: number }>) => {
+    try {
+      // Update all budgets in parallel
+      await Promise.all(
+        updates.map(({ id, planned_amount, actual_amount }) =>
+          monthlyBudgetOperations.update(id, { planned_amount, actual_amount })
+        )
+      );
+      toast.success('All budgets updated successfully');
+      loadData();
+    } catch (error) {
+      toast.error('Failed to update budgets');
+      console.error(error);
+    }
+  };
+
   const handleAddCategory = async () => {
     if (!newCategoryName.trim()) {
       toast.error('Please enter a category name');
@@ -300,6 +316,7 @@ export default function BudgetPlanningPage() {
               <BudgetPlanningTable
                 budgets={budgets}
                 onUpdate={handleUpdateBudget}
+                onBulkUpdate={handleBulkUpdate}
               />
             </CardContent>
           </Card>
