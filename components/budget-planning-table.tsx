@@ -93,13 +93,22 @@ export function BudgetPlanningTable({ budgets, onUpdate, onBulkUpdate }: BudgetP
   };
 
   const updateBulkData = (id: string, field: 'planned' | 'actual', value: string) => {
-    setBulkData(prev => ({
-      ...prev,
-      [id]: {
-        ...prev[id],
-        [field]: value,
-      },
-    }));
+    setBulkData(prev => {
+      const updated = {
+        ...prev,
+        [id]: {
+          ...prev[id],
+          [field]: value,
+        },
+      };
+      
+      // When planned changes, auto-copy to actual (but can be manually changed)
+      if (field === 'planned') {
+        updated[id].actual = value;
+      }
+      
+      return updated;
+    });
   };
 
   const income = budgets.filter(b => b.category.type === 'income');
