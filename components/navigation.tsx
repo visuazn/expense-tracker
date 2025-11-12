@@ -7,7 +7,8 @@ import {
   Receipt, 
   PieChart, 
   Wallet,
-  Users
+  Users,
+  Calendar
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -16,6 +17,7 @@ const navigation = [
   { name: 'Expenses', href: '/expenses', icon: Receipt },
   { name: 'Analytics', href: '/analytics', icon: PieChart },
   { name: 'Budgets', href: '/budgets', icon: Wallet },
+  { name: 'Planning', href: '/planning', icon: Calendar },
   { name: 'Split', href: '/split', icon: Users },
 ];
 
