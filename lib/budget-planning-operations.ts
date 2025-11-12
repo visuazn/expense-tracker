@@ -61,11 +61,15 @@ export const monthlyBudgetOperations = {
         category:budget_categories(*)
       `)
       .eq('year', year)
-      .eq('month', month)
-      .order('category!inner(display_order)');
+      .eq('month', month);
     
     if (error) throw error;
-    return data as (MonthlyBudget & { category: BudgetCategory })[];
+    
+    // Sort by category display_order client-side
+    const sorted = (data as (MonthlyBudget & { category: BudgetCategory })[])
+      .sort((a, b) => (a.category?.display_order || 0) - (b.category?.display_order || 0));
+    
+    return sorted;
   },
 
   // Get budgets for a year
