@@ -6,7 +6,8 @@ import {
   Home, 
   Receipt, 
   PieChart, 
-  Wallet 
+  Wallet,
+  Users
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -15,6 +16,7 @@ const navigation = [
   { name: 'Expenses', href: '/expenses', icon: Receipt },
   { name: 'Analytics', href: '/analytics', icon: PieChart },
   { name: 'Budgets', href: '/budgets', icon: Wallet },
+  { name: 'Split', href: '/split', icon: Users },
 ];
 
 export function Navigation() {
