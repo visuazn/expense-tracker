@@ -13,8 +13,14 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { formatCurrency } from '@/lib/utils';
-import { Check, X, Edit, Save } from 'lucide-react';
+import { Check, X, Edit, Save, CheckCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface BudgetPlanningTableProps {
   budgets: (MonthlyBudget & { category: BudgetCategory })[];
@@ -52,6 +58,21 @@ export function BudgetPlanningTable({ budgets, onUpdate, onBulkUpdate }: BudgetP
       setEditingId(null);
     } catch (error) {
       console.error('Error saving:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const quickComplete = async (budget: MonthlyBudget) => {
+    setSaving(true);
+    try {
+      // Copy planned to actual and save
+      await onUpdate(budget.id, {
+        planned_amount: budget.planned_amount,
+        actual_amount: budget.planned_amount, // Set actual = planned
+      });
+    } catch (error) {
+      console.error('Error completing:', error);
     } finally {
       setSaving(false);
     }
@@ -225,13 +246,32 @@ export function BudgetPlanningTable({ budgets, onUpdate, onBulkUpdate }: BudgetP
               </Button>
             </div>
           ) : (
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={() => startEdit(budget)}
-            >
-              <Edit className="h-4 w-4" />
-            </Button>
+            <div className="flex gap-1">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => quickComplete(budget)}
+                      disabled={saving}
+                    >
+                      <CheckCircle className="h-4 w-4 text-green-600" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Mark as complete (actual = planned)</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => startEdit(budget)}
+              >
+                <Edit className="h-4 w-4" />
+              </Button>
+            </div>
           )}
         </TableCell>
       </TableRow>
