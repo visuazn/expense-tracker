@@ -135,6 +135,21 @@ export function BudgetPlanningTable({ budgets, onUpdate, onBulkUpdate }: BudgetP
   const income = budgets.filter(b => b.category.type === 'income');
   const expenses = budgets.filter(b => b.category.type === 'expense');
 
+  // Calculate totals
+  const calculateTotals = (items: (MonthlyBudget & { category: BudgetCategory })[]) => {
+    return items.reduce(
+      (acc, item) => ({
+        planned: acc.planned + item.planned_amount,
+        actual: acc.actual + item.actual_amount,
+        pending: acc.pending + (item.planned_amount - item.actual_amount),
+      }),
+      { planned: 0, actual: 0, pending: 0 }
+    );
+  };
+
+  const incomeTotals = calculateTotals(income);
+  const expenseTotals = calculateTotals(expenses);
+
   const renderRow = (budget: MonthlyBudget & { category: BudgetCategory }) => {
     const isEditing = editingId === budget.id;
     const pending = budget.planned_amount - budget.actual_amount;
@@ -330,6 +345,20 @@ export function BudgetPlanningTable({ budgets, onUpdate, onBulkUpdate }: BudgetP
               </TableHeader>
               <TableBody>
                 {income.map(renderRow)}
+                {/* Income Total Row */}
+                <TableRow className="bg-green-50 font-bold">
+                  <TableCell>Total Income</TableCell>
+                  <TableCell className="text-green-700">
+                    {formatCurrency(incomeTotals.planned)}
+                  </TableCell>
+                  <TableCell className="text-green-700">
+                    {formatCurrency(incomeTotals.actual)}
+                  </TableCell>
+                  <TableCell className="text-green-700">
+                    {formatCurrency(Math.abs(incomeTotals.pending))}
+                  </TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </div>
@@ -353,6 +382,20 @@ export function BudgetPlanningTable({ budgets, onUpdate, onBulkUpdate }: BudgetP
               </TableHeader>
               <TableBody>
                 {expenses.map(renderRow)}
+                {/* Expenses Total Row */}
+                <TableRow className="bg-red-50 font-bold">
+                  <TableCell>Total Expenses</TableCell>
+                  <TableCell className="text-red-700">
+                    {formatCurrency(expenseTotals.planned)}
+                  </TableCell>
+                  <TableCell className="text-red-700">
+                    {formatCurrency(expenseTotals.actual)}
+                  </TableCell>
+                  <TableCell className="text-red-700">
+                    {formatCurrency(Math.abs(expenseTotals.pending))}
+                  </TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </div>
