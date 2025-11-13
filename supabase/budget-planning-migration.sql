@@ -52,7 +52,8 @@ INSERT INTO budget_categories (name, type, is_default, display_order) VALUES
   ('SWE', 'expense', true, 4),
   ('Credit Card Bill', 'expense', true, 5),
   ('Credit Card EMI', 'expense', true, 6),
-  ('Savings', 'expense', true, 7)
+  ('Savings', 'expense', true, 7),
+  ('Grocery', 'expense', true, 8)
 ON CONFLICT DO NOTHING;
 
 -- Function to update updated_at timestamp

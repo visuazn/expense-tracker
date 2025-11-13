@@ -27,6 +27,7 @@ This feature allows you to:
 - Credit Card Bill
 - Credit Card EMI
 - Savings
+- Grocery
 
 ## Setup Instructions
 
