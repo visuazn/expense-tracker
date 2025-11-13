@@ -123,7 +123,7 @@ vercel
 
 ## Default Categories
 
-The app comes with 8 pre-configured categories:
+The app comes with 9 pre-configured categories:
 
 - 🍴 Food
 - 🚗 Transport
@@ -132,6 +132,7 @@ The app comes with 8 pre-configured categories:
 - 🛍️ Shopping
 - ❤️ Health
 - 📚 Education
+- 🛒 Grocery
 - ⋯ Other
 
 ## Common Issues

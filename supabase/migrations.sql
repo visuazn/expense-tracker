@@ -50,6 +50,7 @@ INSERT INTO categories (name, icon, color) VALUES
   ('Shopping', 'shopping-bag', '#EC4899'),
   ('Health', 'heart-pulse', '#10B981'),
   ('Education', 'book-open', '#6366F1'),
+  ('Grocery', 'shopping-cart', '#22C55E'),
   ('Other', 'more-horizontal', '#6B7280')
 ON CONFLICT DO NOTHING;
 
