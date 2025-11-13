@@ -7,6 +7,7 @@ import {
   HeartPulse,
   BookOpen,
   MoreHorizontal,
+  ShoppingCart,
   LucideIcon,
 } from 'lucide-react';
 
@@ -18,6 +19,7 @@ const iconMap: Record<string, LucideIcon> = {
   'shopping-bag': ShoppingBag,
   'heart-pulse': HeartPulse,
   'book-open': BookOpen,
+  'shopping-cart': ShoppingCart,
   'more-horizontal': MoreHorizontal,
 };
 
